@@ -1,6 +1,6 @@
 class Cell:
     def __init__(self, row, col):
-        self.row = row
+        self.row: int = row
         self.col = col
         self.visited = False
         self.north = True
