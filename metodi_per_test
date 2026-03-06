@@ -1,0 +1,28 @@
+def print_hexa_maze(self, filename=None):
+        lines = []
+        for r in self.grid:
+            line = ""
+            for c in r:
+                line += format(c.hexa, "X")
+            lines.append(line)
+            if filename:
+                with open(filename, "w") as f:
+                    f.write("\n".join(lines))
+            else:
+                print(line)
+
+    def backtracking(self, starting_cell=None):
+        stack = []
+        curr_cell = starting_cell
+        while self.has_unvisited_cells():
+            unvisited = self.unvisited_neighbours(curr_cell)
+            if unvisited:
+                direction = random.choice(unvisited)
+                curr_cell.break_wall(direction)
+                direction.visited = 1
+                if self.unvisited_neighbours(curr_cell):
+                    stack.append(curr_cell)
+                curr_cell = direction
+            else:
+                curr_cell = stack.pop()
+            self.print_maze()
