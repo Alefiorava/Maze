@@ -30,7 +30,7 @@ class Maze:
                 bottom += wall
             print(line)
             print(bottom)
-        sleep(0.05)
+        sleep(0.0002)
 
     def has_unvisited_cells(self) -> bool:
         for r in self.grid:
@@ -61,7 +61,25 @@ class Maze:
             if unvisited:
                 direction = random.choice(unvisited)
                 curr_cell.break_wall(direction)
+                
                 direction.visited = 1
+                if self.unvisited_neighbours(curr_cell):
+                    stack.append(curr_cell)
+                curr_cell = direction
+            else:
+                curr_cell = stack.pop()
+            self.print_maze()
+        
+    def bad_backtracking(self, starting_cell=None):
+        stack = []
+        curr_cell = starting_cell
+        curr_cell.visited = 1
+        while self.has_unvisited_cells():
+            unvisited = self.unvisited_neighbours(curr_cell)
+            if unvisited:
+                direction = random.choice(unvisited)
+                curr_cell.break_wall(direction)
+                direction.visited = random.randint(0, 1) < 0.9
                 if self.unvisited_neighbours(curr_cell):
                     stack.append(curr_cell)
                 curr_cell = direction
@@ -82,7 +100,7 @@ class Maze:
             else:
                 print(line)
 
-m = Maze(10, 10)
+m = Maze(20, 20)
 m.backtracking(m.grid[0][0])
 """ m.grid[0][0].break_wall(m.grid[0][1])
 m.grid[0][0].break_wall(m.grid[1][0])
