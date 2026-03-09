@@ -7,7 +7,8 @@ class Cell:
         self.south = True
         self.east = True
         self.west = True
-        self.hexa = 0
+        self.hexa = 15
+        self._42 = False
         self.assign_hexa()
     
     def break_wall(self, next_cell):

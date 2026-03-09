@@ -26,3 +26,27 @@ def print_hexa_maze(self, filename=None):
             else:
                 curr_cell = stack.pop()
             self.print_maze()
+
+    
+    def aprim_algoritm(self, starting_cell=None):
+        frontier = []
+        curr_cell = starting_cell
+        curr_cell.visited = 1
+        next_cell = None
+        frontier += self.unvisited_neighbours(curr_cell)
+        while frontier:
+            frontier += self.unvisited_neighbours(curr_cell)
+            next_cell = random.choice(frontier)
+
+            next_cell, parent_cell = random.choice(frontier)
+            frontier.remove((next_cell, parent_cell))
+    
+            frontier.remove(next_cell)
+            curr_cell.break_wall(next_cell)
+
+
+            next_cell.visited = 1
+            curr_cell = next_cell
+
+
+            self.print_maze()
